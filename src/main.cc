@@ -18,6 +18,8 @@ class Main {
 void
 Main::run() {
   Lexer lexer = Lexer();
+  Printer printer = Printer();
+  (void) printer;
   Executer executer = Executer();
   std::string str;
   while (true) {
@@ -34,6 +36,8 @@ Main::run() {
       auto tokens = lexer.scan(str); 
       Parser parser = Parser(tokens);
       std::shared_ptr<Node> ast = parser.parse();
+      //ast->accept(printer);
+      //std::cout << std::endl;
       ast->accept(executer);
     }
     catch(const std::exception& e) {

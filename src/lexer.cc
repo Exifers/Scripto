@@ -16,6 +16,8 @@ std::map<Token::token_t, std::string> Token::regexs_ =
   {EQ, "="},
   {FUNCTION, "function"},
   {PRINT, "print"},
+  {IF, "if"},
+  {DEQ, "=="},
   {NUMBER, "[0-9]\\+"},
   {NAME, "[a-zA-Z][a-zA-Z0-9]*"}
 };

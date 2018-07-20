@@ -14,6 +14,7 @@ class Executer : public Visitor {
     void visit(AssignExp& assignExp) override;
     void visit(FunctionDec& functionDec) override;
     void visit(FunctionCall& functionCall) override; 
+    void visit(IfStmt& ifStmt) override;
   private:
     std::map<std::string, int> values_;
     std::map<std::string, std::shared_ptr<Node>> functions_;

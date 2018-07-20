@@ -14,6 +14,8 @@ class Token {
       EQ,
       FUNCTION,
       PRINT,
+      IF,
+      DEQ,
       NUMBER,
       NAME
     } token_t;

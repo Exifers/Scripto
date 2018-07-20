@@ -103,3 +103,21 @@ class FunctionCall : public Exp {
     std::string name_;
     fdec_ptr_t def_;
 };
+
+class IfStmt : public Exp {
+  public:
+    using exps_ptr_t = std::shared_ptr<Exps>;
+    using value_ptr_t = std::shared_ptr<Value>;
+    IfStmt(value_ptr_t lhs, value_ptr_t rhs, exps_ptr_t exps);
+
+    value_ptr_t get_lhs();
+    value_ptr_t get_rhs();
+    exps_ptr_t get_exps();
+
+    void accept(Visitor& visitor) override;
+  private:
+    value_ptr_t lhs_;
+    value_ptr_t rhs_;
+    exps_ptr_t exps_;
+};
+

@@ -134,3 +134,29 @@ void
 FunctionCall::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
+
+/* IfStmt */
+
+IfStmt::IfStmt(value_ptr_t lhs, value_ptr_t rhs, exps_ptr_t exps)
+  : lhs_(lhs), rhs_(rhs), exps_(exps)
+{}
+
+IfStmt::value_ptr_t
+IfStmt::get_lhs() {
+  return lhs_;
+}
+
+IfStmt::value_ptr_t
+IfStmt::get_rhs() {
+  return rhs_;
+}
+
+IfStmt::exps_ptr_t
+IfStmt::get_exps() {
+  return exps_;
+}
+
+void
+IfStmt::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}

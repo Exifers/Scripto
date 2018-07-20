@@ -26,4 +26,6 @@ class Parser {
     std::shared_ptr<PrintExp> parse_print();
     std::shared_ptr<Exp> parse_name();
     std::shared_ptr<FunctionDec> parse_function_dec();
+    std::shared_ptr<IfStmt> parse_if();
+    std::shared_ptr<Value> parse_value();
 };

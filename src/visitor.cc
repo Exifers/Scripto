@@ -50,6 +50,13 @@ Visitor::visit(FunctionCall& functionCall) {
   (void) functionCall;
 }
 
+void
+Visitor::visit(IfStmt& ifStmt) {
+  ifStmt.get_lhs()->accept(*this);
+  ifStmt.get_rhs()->accept(*this);
+  ifStmt.get_exps()->accept(*this);
+}
+
 /* Printer */
 
 void
@@ -99,4 +106,15 @@ void
 Printer::visit(FunctionCall& functionCall) {
   std::cout << functionCall.get_name();
   std::cout << " ( )";
+}
+
+void
+Printer::visit(IfStmt& ifStmt) {
+  std::cout << "if ( ";
+  ifStmt.get_lhs()->accept(*this);
+  std::cout << " == ";
+  ifStmt.get_rhs()->accept(*this);
+  std::cout << " ) { ";
+  ifStmt.get_exps()->accept(*this);
+  std::cout << " }";
 }

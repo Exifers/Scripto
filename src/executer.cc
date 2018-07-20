@@ -54,3 +54,10 @@ Executer::visit(FunctionCall& functionCall) {
   auto function = read_function(functionCall);
   function->accept(*this);
 }
+
+void
+Executer::visit(IfStmt& ifStmt) {
+  if (read_value(*ifStmt.get_lhs()) == read_value(*ifStmt.get_rhs())) {
+    ifStmt.get_exps()->accept(*this);
+  }
+}

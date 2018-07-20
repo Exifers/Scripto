@@ -27,6 +27,9 @@ Parser::parse_exps() {
       case Token::FUNCTION:
         exps->add_exp(parse_function_dec());
         break;
+      case Token::IF:
+        exps->add_exp(parse_if());
+        break;
       default:
         throw std::invalid_argument(
           std::string("Unexpected token at beginning of expression: ")
@@ -58,17 +61,7 @@ Parser::parse_name() {
   switch(next().get_type()) {
     case Token::EQ: { // assignExp
       step();
-      std::string value = next().get_value();
-      try {
-        auto rhs = std::make_shared<Value>(std::stoi(value));
-        step();
-        return std::make_shared<AssignExp>(val, rhs); 
-      }
-      catch(std::invalid_argument& e) {
-        auto rhs = std::make_shared<Value>(value);
-        step();
-        return std::make_shared<AssignExp>(val, rhs); 
-      }
+      return std::make_shared<AssignExp>(val, parse_value()); 
     }
     case Token::LPAR: // functionCall
       step();
@@ -76,6 +69,21 @@ Parser::parse_name() {
       return std::make_shared<FunctionCall>(val->get_name());
     default:
       throw std::invalid_argument("Expected '=' or '(' after name");
+  }
+}
+
+std::shared_ptr<Value>
+Parser::parse_value() {
+  std::string val = next().get_value();
+  try {
+    auto res = std::make_shared<Value>(std::stoi(val));
+    step();
+    return res;
+  }
+  catch(std::invalid_argument& e) {
+    auto res = std::make_shared<Value>(val);
+    step();
+    return res;
   }
 }
 
@@ -88,6 +96,20 @@ Parser::parse_function_dec() {
   auto exps = parse_exps();
   eat(Token::RCBRA);
   return std::make_shared<FunctionDec>(function_name, exps);
+}
+
+std::shared_ptr<IfStmt>
+Parser::parse_if() {
+  eat(Token::IF);
+  eat(Token::LPAR);
+  auto lhs = parse_value();
+  eat(Token::DEQ);
+  auto rhs = parse_value();
+  eat(Token::RPAR);
+  eat(Token::LCBRA);
+  auto exps = parse_exps();
+  eat(Token::RCBRA);
+  return std::make_shared<IfStmt>(lhs, rhs, exps);
 }
 
 void
