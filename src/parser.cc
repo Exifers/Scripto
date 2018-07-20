@@ -58,9 +58,17 @@ Parser::parse_name() {
   switch(next().get_type()) {
     case Token::EQ: { // assignExp
       step();
-      auto rhs = std::make_shared<Value>(next().get_value());
-      step();
-      return std::make_shared<AssignExp>(val, rhs); 
+      std::string value = next().get_value();
+      try {
+        auto rhs = std::make_shared<Value>(std::stoi(value));
+        step();
+        return std::make_shared<AssignExp>(val, rhs); 
+      }
+      catch(std::invalid_argument& e) {
+        auto rhs = std::make_shared<Value>(value);
+        step();
+        return std::make_shared<AssignExp>(val, rhs); 
+      }
     }
     case Token::LPAR: // functionCall
       step();

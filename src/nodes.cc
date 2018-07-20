@@ -5,8 +5,7 @@
 /* Node */
 
 void
-Node::accept(const Visitor& visitor) const {
-  std::cout << "Visitor visits a node" << std::endl;
+Node::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
@@ -17,13 +16,13 @@ Exps::add_exp(exp_ptr_t exp) {
   exps_.push_back(exp);
 }
 
-const Exps::exp_vec_t& 
-Exps::get_exps() const {
+Exps::exp_vec_t& 
+Exps::get_exps() {
   return exps_;
 }
 
 void
-Exps::accept(const Visitor& visitor) const {
+Exps::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
@@ -37,23 +36,23 @@ Value::Value(int value)
   : name_(""), value_(value), type_(STATIC)
 {}
 
-const std::string&
-Value::get_name() const {
+std::string&
+Value::get_name() {
   return name_;
 }
 
-const int&
-Value::get_value() const {
+int&
+Value::get_value() {
   return value_;
 }
 
-const Value::value_t&
-Value::get_type() const {
+Value::value_t&
+Value::get_type() {
   return type_;
 }
 
 void
-Value::accept(const Visitor& visitor) const {
+Value::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
@@ -63,13 +62,13 @@ PrintExp::PrintExp(val_ptr_t value)
   : value_(value)
 {}
 
-const PrintExp::val_ptr_t&
-PrintExp::get_value() const {
+PrintExp::val_ptr_t&
+PrintExp::get_value() {
   return value_;
 }
 
 void
-PrintExp::accept(const Visitor& visitor) const {
+PrintExp::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
@@ -79,18 +78,18 @@ AssignExp::AssignExp(val_ptr_t lhs, val_ptr_t rhs)
   : lhs_(lhs), rhs_(rhs)
 {}
 
-const AssignExp::val_ptr_t&
-AssignExp::get_lhs() const {
+AssignExp::val_ptr_t&
+AssignExp::get_lhs() {
   return lhs_;
 }
 
-const AssignExp::val_ptr_t&
-AssignExp::get_rhs() const {
+AssignExp::val_ptr_t&
+AssignExp::get_rhs() {
   return rhs_;
 }
 
 void
-AssignExp::accept(const Visitor& visitor) const {
+AssignExp::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
@@ -100,18 +99,18 @@ FunctionDec::FunctionDec(std::string name, exps_ptr_t exps)
   : name_(name), exps_(exps)
 {}
 
-const std::string&
-FunctionDec::get_name() const {
+std::string&
+FunctionDec::get_name() {
   return name_;
 }
 
-const FunctionDec::exps_ptr_t&
-FunctionDec::get_exps() const {
+FunctionDec::exps_ptr_t&
+FunctionDec::get_exps() {
   return exps_;
 }
 
 void
-FunctionDec::accept(const Visitor& visitor) const {
+FunctionDec::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
@@ -121,17 +120,17 @@ FunctionCall::FunctionCall(std::string name)
   : name_(name)
 {}
 
-const std::string&
-FunctionCall::get_name() const {
+std::string&
+FunctionCall::get_name() {
   return name_;
 }
 
-const FunctionCall::fdec_ptr_t
-FunctionCall::get_def() const {
+FunctionCall::fdec_ptr_t
+FunctionCall::get_def() {
   return def_;
 }
 
 void
-FunctionCall::accept(const Visitor& visitor) const {
+FunctionCall::accept(Visitor& visitor) {
   visitor.visit(*this);
 }

@@ -11,7 +11,7 @@ class Visitor;
 
 class Node {
   public:
-    virtual void accept(const Visitor& visitor) const;
+    virtual void accept(Visitor& visitor);
 };
 
 class Exps : public Node {
@@ -20,9 +20,9 @@ class Exps : public Node {
     using exp_vec_t = std::vector<exp_ptr_t>;
     Exps() = default;
     void add_exp(exp_ptr_t exp);
-    const exp_vec_t& get_exps() const;
+    exp_vec_t& get_exps();
 
-    void accept(const Visitor& visitor) const override;
+    void accept(Visitor& visitor) override;
   private:
     exp_vec_t exps_ = exp_vec_t();
 };
@@ -39,11 +39,11 @@ class Value : public Node {
     Value(std::string name);
     Value(int value);
 
-    const std::string& get_name() const;
-    const int& get_value() const;
-    const value_t& get_type() const;
+    std::string& get_name();
+    int& get_value();
+    value_t& get_type();
 
-    void accept(const Visitor& visitor) const override;
+    void accept(Visitor& visitor) override;
   private:
     std::string name_;
     int value_;
@@ -55,9 +55,9 @@ class PrintExp : public Exp {
     using val_ptr_t = std::shared_ptr<Value>;
     PrintExp(val_ptr_t value);
     
-    const val_ptr_t& get_value() const;
+    val_ptr_t& get_value();
 
-    void accept(const Visitor& visitor) const override;
+    void accept(Visitor& visitor) override;
   private:
     val_ptr_t value_;
 };
@@ -67,10 +67,10 @@ class AssignExp : public Exp {
     using val_ptr_t = std::shared_ptr<Value>;
     AssignExp(val_ptr_t lhs, val_ptr_t rhs);
     
-    const val_ptr_t& get_lhs() const;
-    const val_ptr_t& get_rhs() const;
+    val_ptr_t& get_lhs();
+    val_ptr_t& get_rhs();
 
-    void accept(const Visitor& visitor) const override;
+    void accept(Visitor& visitor) override;
   private:
     val_ptr_t lhs_;
     val_ptr_t rhs_; 
@@ -81,10 +81,10 @@ class FunctionDec : public Exp {
     using exps_ptr_t = std::shared_ptr<Exps>;
     FunctionDec(std::string name, exps_ptr_t exps);
 
-    const std::string& get_name() const;
-    const exps_ptr_t& get_exps() const;
+    std::string& get_name();
+    exps_ptr_t& get_exps();
 
-    void accept(const Visitor& visitor) const override;
+    void accept(Visitor& visitor) override;
   private:
     std::string name_;
     exps_ptr_t exps_;
@@ -95,10 +95,10 @@ class FunctionCall : public Exp {
     using fdec_ptr_t = std::shared_ptr<FunctionDec>;
     FunctionCall(std::string name);
 
-    const std::string& get_name() const;
-    const fdec_ptr_t get_def() const;
+    std::string& get_name();
+    fdec_ptr_t get_def();
 
-    void accept(const Visitor& visitor) const override;
+    void accept(Visitor& visitor) override;
   private:
     std::string name_;
     fdec_ptr_t def_;

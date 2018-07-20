@@ -6,54 +6,54 @@
 /* Visitor (does nothing) */
 
 void
-Visitor::visit(const Node& node) const {
+Visitor::visit(Node& node) {
   (void) node;
   throw std::invalid_argument("Node instance must have final dynamic type");
 }
 
 void
-Visitor::visit(const Exps& exps) const {
+Visitor::visit(Exps& exps) {
   for(auto it = exps.get_exps().begin(); it != exps.get_exps().end(); it++) {
     (*it)->accept(*this);
   } 
 }
 
 void
-Visitor::visit(const Exp& exp) const {
+Visitor::visit(Exp& exp) {
   (void) exp;
   throw std::invalid_argument("Exp instance must have final dynamic type");
 }
 
 void
-Visitor::visit(const Value& value) const {
+Visitor::visit(Value& value) {
   (void) value;
 }
 
 void
-Visitor::visit(const PrintExp& printExp) const {
+Visitor::visit(PrintExp& printExp) {
   printExp.get_value()->accept(*this);
 }
 
 void
-Visitor::visit(const AssignExp& assignExp) const {
+Visitor::visit(AssignExp& assignExp) {
   assignExp.get_lhs()->accept(*this);
   assignExp.get_rhs()->accept(*this);
 }
 
 void
-Visitor::visit(const FunctionDec& functionDec) const {
+Visitor::visit(FunctionDec& functionDec) {
   functionDec.get_exps()->accept(*this);
 }
 
 void
-Visitor::visit(const FunctionCall& functionCall) const {
+Visitor::visit(FunctionCall& functionCall) {
   (void) functionCall;
 }
 
 /* Printer */
 
 void
-Printer::visit(const Exps& exps) const {
+Printer::visit(Exps& exps) {
   for(auto it = exps.get_exps().begin(); it != exps.get_exps().end(); it++) {
     (*it)->accept(*this);
     if (std::next(it) != exps.get_exps().end())
@@ -62,7 +62,7 @@ Printer::visit(const Exps& exps) const {
 }
 
 void
-Printer::visit(const Value& value) const {
+Printer::visit(Value& value) {
   switch (value.get_type()) {
     case Value::VARIABLE:
       std::cout << value.get_name();
@@ -74,20 +74,20 @@ Printer::visit(const Value& value) const {
 }
 
 void
-Printer::visit(const PrintExp& printExp) const {
+Printer::visit(PrintExp& printExp) {
   std::cout << "print ";
   printExp.get_value()->accept(*this); 
 }
 
 void
-Printer::visit(const AssignExp& assignExp) const {
+Printer::visit(AssignExp& assignExp) {
   assignExp.get_lhs()->accept(*this);
   std::cout << " = ";
   assignExp.get_rhs()->accept(*this);
 }
 
 void
-Printer::visit(const FunctionDec& functionDec) const {
+Printer::visit(FunctionDec& functionDec) {
   std::cout << "function ";
   std::cout << functionDec.get_name();
   std::cout << " { ";
@@ -96,7 +96,7 @@ Printer::visit(const FunctionDec& functionDec) const {
 }
 
 void
-Printer::visit(const FunctionCall& functionCall) const {
+Printer::visit(FunctionCall& functionCall) {
   std::cout << functionCall.get_name();
   std::cout << " ( )";
 }
