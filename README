@@ -1,0 +1,41 @@
+== Scripto2 ==
+Small test script langage, v0.2.
+
+= Features =
+[X] Lexer
+[X] Parser
+[X] Pretty-printer
+[ ] Executer
+
+= Prerequisites =
+- GNU/Linux
+- g++
+- make
+
+= Compile =
+`make`
+
+= Use =
+`./main`
+Enter some code and type enter it will show the AST pretty-printed.
+Type `Ctrl+D` to exit.
+
+= Grammar =
+exps :== { exp }
+exp :== /* print values */
+        'print' num
+      | 'print' val
+        /* assignment */
+      | val '=' val
+      | val '=' num
+        /* function definition and function call */
+      | 'function' name '{' exps '}'
+      | name '(' ')'
+num :== [0-9]\+
+name :== [a-zA-Z][a-zA-Z0-9]*
+
+All tokens must be separated by spaces (' ', '\n' or '\t).
+
+= Authors =
+Exifers,
+July 2018
