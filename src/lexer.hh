@@ -15,6 +15,7 @@ class Token {
       FUNCTION,
       PRINT,
       IF,
+      ELSE,
       DEQ,
       NUMBER,
       NAME

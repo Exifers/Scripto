@@ -60,4 +60,7 @@ Executer::visit(IfStmt& ifStmt) {
   if (read_value(*ifStmt.get_lhs()) == read_value(*ifStmt.get_rhs())) {
     ifStmt.get_exps()->accept(*this);
   }
+  else if (ifStmt.getElse_exps() != nullptr) {
+    ifStmt.getElse_exps()->accept(*this);
+  }
 }

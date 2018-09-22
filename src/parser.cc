@@ -109,6 +109,14 @@ Parser::parse_if() {
   eat(Token::LCBRA);
   auto exps = parse_exps();
   eat(Token::RCBRA);
+
+  if (next().get_type() == Token::ELSE) {
+    eat(Token::ELSE);
+    eat(Token::LCBRA);
+    auto else_exps = parse_exps();
+    eat(Token::RCBRA);
+    return std::make_shared<IfStmt>(lhs, rhs, exps, else_exps);
+  }
   return std::make_shared<IfStmt>(lhs, rhs, exps);
 }
 

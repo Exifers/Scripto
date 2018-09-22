@@ -109,15 +109,18 @@ class IfStmt : public Exp {
     using exps_ptr_t = std::shared_ptr<Exps>;
     using value_ptr_t = std::shared_ptr<Value>;
     IfStmt(value_ptr_t lhs, value_ptr_t rhs, exps_ptr_t exps);
+    IfStmt(value_ptr_t lhs, value_ptr_t rhs, exps_ptr_t exps, exps_ptr_t else_exps);
 
     value_ptr_t get_lhs();
     value_ptr_t get_rhs();
     exps_ptr_t get_exps();
+    exps_ptr_t getElse_exps();
 
     void accept(Visitor& visitor) override;
   private:
     value_ptr_t lhs_;
     value_ptr_t rhs_;
     exps_ptr_t exps_;
+    exps_ptr_t else_exps_;
 };
 

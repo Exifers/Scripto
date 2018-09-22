@@ -141,6 +141,12 @@ IfStmt::IfStmt(value_ptr_t lhs, value_ptr_t rhs, exps_ptr_t exps)
   : lhs_(lhs), rhs_(rhs), exps_(exps)
 {}
 
+IfStmt::IfStmt(IfStmt::value_ptr_t lhs, IfStmt::value_ptr_t rhs, IfStmt::exps_ptr_t exps,
+               IfStmt::exps_ptr_t else_exps)
+               : lhs_(lhs), rhs_(rhs), exps_(exps), else_exps_(else_exps) {
+
+}
+
 IfStmt::value_ptr_t
 IfStmt::get_lhs() {
   return lhs_;
@@ -154,6 +160,11 @@ IfStmt::get_rhs() {
 IfStmt::exps_ptr_t
 IfStmt::get_exps() {
   return exps_;
+}
+
+IfStmt::exps_ptr_t
+IfStmt::getElse_exps() {
+  return else_exps_;
 }
 
 void

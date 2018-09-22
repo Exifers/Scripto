@@ -24,13 +24,16 @@ Type `Ctrl+D` to exit.
 exps :== { exp }
 exp :== /* print values */
         'print' num
-      | 'print' val
+      | 'print' name
         /* assignment */
-      | val '=' val
-      | val '=' num
+      | name '=' name
+      | name '=' num
         /* function definition and function call */
       | 'function' name '{' exps '}'
       | name '(' ')'
+        /* controle structures */
+      | 'if' '(' name '==' name ')' '{' exps '}'
+      | 'if' '(' name '==' name ')' '{' exps '}' 'else' '{' exps '}'
 num :== [0-9]\+
 name :== [a-zA-Z][a-zA-Z0-9]*
 
