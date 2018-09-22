@@ -28,13 +28,23 @@ Exps::accept(Visitor& visitor) {
 
 /* Value */
 
-Value::Value(std::string name)
+Value::Value(const std::string& name)
   : name_(name), value_(0), type_(VARIABLE)
 {}
 
 Value::Value(int value)
   : name_(""), value_(value), type_(STATIC)
 {}
+
+Value::Value(const std::string& name, int value, value_t type,
+             const std::string& text_value)
+  : name_(name), value_(value), type_(type), text_value_(text_value)
+{}
+
+std::shared_ptr<Value>
+Value::make_text_value(const std::string& value) {
+  return std::make_shared<Value>("", 0, TEXT, value);
+}
 
 std::string&
 Value::get_name() {
@@ -44,6 +54,11 @@ Value::get_name() {
 int&
 Value::get_value() {
   return value_;
+}
+
+std::string&
+Value::get_text_value() {
+  return text_value_;
 }
 
 Value::value_t&

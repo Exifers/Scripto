@@ -34,13 +34,19 @@ class Value : public Node {
   public:
     typedef enum type {
       VARIABLE,
-      STATIC
+      STATIC,
+      TEXT
     } value_t;
-    Value(std::string name);
+    Value(const std::string& name);
     Value(int value);
+    Value(const std::string& name, int value, value_t type,
+          const std::string& text_value);
+
+    static std::shared_ptr<Value> make_text_value(const std::string& value);
 
     std::string& get_name();
     int& get_value();
+    std::string& get_text_value();
     value_t& get_type();
 
     void accept(Visitor& visitor) override;
@@ -48,6 +54,7 @@ class Value : public Node {
     std::string name_;
     int value_;
     value_t type_;
+    std::string text_value_;
 };
 
 class PrintExp : public Exp {

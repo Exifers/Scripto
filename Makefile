@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -Wextra -Werror -pedantic -std=c++17 -I .
+CXXFLAGS = -Wall -Wextra -Werror -pedantic -std=c++17 -I src
 
 bin = main
 fls = $(shell find src/ -type f -name "*.cc")

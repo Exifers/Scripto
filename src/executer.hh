@@ -16,11 +16,11 @@ class Executer : public Visitor {
     void visit(FunctionCall& functionCall) override; 
     void visit(IfStmt& ifStmt) override;
   private:
-    std::map<std::string, int> values_;
+    std::map<std::string, std::string> values_;
     std::map<std::string, std::shared_ptr<Node>> functions_;
 
-    int read_value(Value& value);
-    void set_value(std::string& name, int value);
+    std::string read_value(Value& value);
+    void set_value(std::string& name, std::string value);
 
     std::shared_ptr<Node> read_function(FunctionCall& functionCall);
     void set_function(std::string& name, std::shared_ptr<Node> function);

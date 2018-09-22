@@ -3,10 +3,13 @@
 
 #include "executer.hh"
 
-int
+std::string
 Executer::read_value(Value& value) {
   if (value.get_type() == Value::STATIC) {
-    return value.get_value();
+    return std::to_string(value.get_value());
+  }
+  if (value.get_type() == Value::TEXT) {
+    return value.get_text_value();
   }
   if (values_.find(value.get_name()) == values_.end()) {
     throw std::invalid_argument("Unknown variable: " + value.get_name());
@@ -16,7 +19,7 @@ Executer::read_value(Value& value) {
 
 
 void
-Executer::set_value(std::string& name, int value) {
+Executer::set_value(std::string& name, std::string value) {
   values_[name] = value;
 }
 

@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <sstream>
 
 class Token {
   public: 
@@ -17,6 +18,7 @@ class Token {
       IF,
       DEQ,
       NUMBER,
+      TEXT,
       NAME
     } token_t;
     static std::map<token_t, std::string> regexs_;
@@ -42,4 +44,9 @@ class Lexer {
 
   private:
     bool match(const std::string& input, const std::string& simple_pattern);
+    void skip_spaces(std::stringstream& ss);
+    bool is_space(const char c);
+    std::string scan_enclosed_text(std::stringstream& ss, std::string begin,
+                                   std::string end);
+    bool compare(std::stringstream& ss, std::string token);
 };

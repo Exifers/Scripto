@@ -42,16 +42,7 @@ Parser::parse_exps() {
 std::shared_ptr<PrintExp>
 Parser::parse_print() {
   eat(Token::PRINT);
-  try {
-    auto val = std::make_shared<Value>(std::stoi(next().get_value()));
-    step();
-    return std::make_shared<PrintExp>(val);
-  }
-  catch(std::invalid_argument& e) {
-    auto val = std::make_shared<Value>(next().get_value());
-    step();
-    return std::make_shared<PrintExp>(val);
-  }
+  return std::make_shared<PrintExp>(parse_value());
 }
 
 std::shared_ptr<Exp>
@@ -75,16 +66,28 @@ Parser::parse_name() {
 std::shared_ptr<Value>
 Parser::parse_value() {
   std::string val = next().get_value();
-  try {
-    auto res = std::make_shared<Value>(std::stoi(val));
+  if (next().get_type() == Token::NUMBER) {
+      try {
+        auto res = std::make_shared<Value>(std::stoi(val));
+        step();
+        return res;
+      }
+      catch(std::invalid_argument& e) {
+        std::cerr << "[Warning][Parser]: can't read value as number but number \
+was recognized by lexer" << std::endl;
+        auto res = std::make_shared<Value>(val);
+        step();
+        return res;
+      }
+  }
+  else if (next().get_type() == Token::TEXT) {
+    auto res = Value::make_text_value(val.substr(1, val.length() - 2));
     step();
     return res;
   }
-  catch(std::invalid_argument& e) {
-    auto res = std::make_shared<Value>(val);
-    step();
-    return res;
-  }
+  auto res = std::make_shared<Value>(val);
+  step();
+  return res; 
 }
 
 std::shared_ptr<FunctionDec>

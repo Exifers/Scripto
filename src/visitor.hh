@@ -14,14 +14,14 @@ class IfStmt;
 
 class Visitor {
   public:
-    virtual void visit(Node& node) ;
-    virtual void visit(Exps& exps) ;
-    virtual void visit(Exp& exp) ;
-    virtual void visit(Value& value) ;
-    virtual void visit(PrintExp& printExp) ;
-    virtual void visit(AssignExp& assignExp) ;
-    virtual void visit(FunctionDec& functionDec) ;
-    virtual void visit(FunctionCall& functionCall) ; 
+    virtual void visit(Node& node);
+    virtual void visit(Exps& exps);
+    virtual void visit(Exp& exp);
+    virtual void visit(Value& value);
+    virtual void visit(PrintExp& printExp);
+    virtual void visit(AssignExp& assignExp);
+    virtual void visit(FunctionDec& functionDec);
+    virtual void visit(FunctionCall& functionCall); 
     virtual void visit(IfStmt& ifStmt);
 };
 

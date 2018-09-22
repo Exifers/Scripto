@@ -74,6 +74,9 @@ Printer::visit(Value& value) {
     case Value::VARIABLE:
       std::cout << value.get_name();
       break;
+    case Value::TEXT:
+      std::cout << "\"" << value.get_text_value() << "\"";
+      break;
     case Value::STATIC:
       std::cout << value.get_value();
       break;
