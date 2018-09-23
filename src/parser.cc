@@ -42,21 +42,12 @@ Parser::parse_exps() {
 std::shared_ptr<PrintExp>
 Parser::parse_print() {
   eat(Token::PRINT);
-  try {
-    auto val = std::make_shared<Value>(std::stoi(next().get_value()));
-    step();
-    return std::make_shared<PrintExp>(val);
-  }
-  catch(std::invalid_argument& e) {
-    auto val = std::make_shared<Value>(next().get_value());
-    step();
-    return std::make_shared<PrintExp>(val);
-  }
+  return std::make_shared<PrintExp>(parse_value());
 }
 
 std::shared_ptr<Exp>
 Parser::parse_name() {
-  auto val = std::make_shared<Value>(next().get_value());
+  auto val = std::make_shared<Value>(next().get_value(), 0);
   step();
   switch(next().get_type()) {
     case Token::EQ: { // assignExp
@@ -75,13 +66,20 @@ Parser::parse_name() {
 std::shared_ptr<Value>
 Parser::parse_value() {
   std::string val = next().get_value();
+  if (next().get_type() == Token::STRING) {
+    auto res = std::make_shared<Value>(val);
+    step();
+    return res;
+  }
   try {
+    // parse int
     auto res = std::make_shared<Value>(std::stoi(val));
     step();
     return res;
   }
   catch(std::invalid_argument& e) {
-    auto res = std::make_shared<Value>(val);
+    // parse name
+    auto res = std::make_shared<Value>(val, 0);
     step();
     return res;
   }
@@ -110,7 +108,7 @@ Parser::parse_if() {
   auto exps = parse_exps();
   eat(Token::RCBRA);
 
-  if (next().get_type() == Token::ELSE) {
+  if (has_next() && next().get_type() == Token::ELSE) {
     eat(Token::ELSE);
     eat(Token::LCBRA);
     auto else_exps = parse_exps();

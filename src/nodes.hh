@@ -32,22 +32,34 @@ class Exp : public Node {
 
 class Value : public Node {
   public:
-    typedef enum type {
-      VARIABLE,
-      STATIC
-    } value_t;
-    Value(std::string name);
+    typedef enum {
+      LVALUE, // int or string
+      RVALUE  // name
+    } memory_t;
+    typedef enum {
+        INT,
+        STRING,
+        STRUCT,
+        CLASS
+    } type_t;
+    Value(std::string value);
     Value(int value);
+    Value(std::string name, std::string value);
+    Value(std::string name, int value);
 
     std::string& get_name();
-    int& get_value();
-    value_t& get_type();
+    int& get_int_value();
+    memory_t& get_memory();
+    type_t& get_type();
+    std::string& get_string_value();
 
     void accept(Visitor& visitor) override;
   private:
     std::string name_;
-    int value_;
-    value_t type_;
+    int int_value_;
+    std::string string_value_;
+    memory_t memory_;
+    type_t type_;
 };
 
 class PrintExp : public Exp {

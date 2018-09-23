@@ -23,19 +23,24 @@ Type `Ctrl+D` to exit.
 = Grammar =
 exps :== { exp }
 exp :== /* print values */
-        'print' num
-      | 'print' name
+        'print' value
         /* assignment */
-      | name '=' name
-      | name '=' num
+      | lvalue '=' value
         /* function definition and function call */
       | 'function' name '{' exps '}'
       | name '(' ')'
         /* controle structures */
-      | 'if' '(' name '==' name ')' '{' exps '}'
-      | 'if' '(' name '==' name ')' '{' exps '}' 'else' '{' exps '}'
+      | 'if' '(' value '==' value ')' '{' exps '}' [ 'else' '{' exps '}' ]
+value  :== lvalue
+         | rvalue
+lvalue :== name
+rvalue :== name
+         | num
+         | string
+
 num :== [0-9]\+
 name :== [a-zA-Z][a-zA-Z0-9]*
+string :== [a-aA-Z0-9_]+
 
 All tokens must be separated by spaces (' ', '\n' or '\t).
 

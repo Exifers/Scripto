@@ -18,6 +18,7 @@ class Token {
       ELSE,
       DEQ,
       NUMBER,
+      STRING,
       NAME
     } token_t;
     static std::map<token_t, std::string> regexs_;
@@ -43,4 +44,5 @@ class Lexer {
 
   private:
     bool match(const std::string& input, const std::string& simple_pattern);
+    std::string atohex(const char *input);
 };

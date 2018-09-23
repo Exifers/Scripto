@@ -2,6 +2,7 @@
 #include <regex.h>
 #include <iostream>
 #include <cstring>
+#include <iomanip>
 
 #include "lexer.hh"
 
@@ -20,6 +21,7 @@ std::map<Token::token_t, std::string> Token::regexs_ =
   {ELSE, "else"},
   {DEQ, "=="},
   {NUMBER, "[0-9]\\+"},
+  {STRING, "\"[a-zA-Z0-9_][a-zA-Z0-9_]*\""},
   {NAME, "[a-zA-Z][a-zA-Z0-9]*"}
 };
 
@@ -49,6 +51,17 @@ Token::operator!=(const Token& token) const {
   return true;
 }
 
+std::string
+Lexer::atohex(const char *input) {
+  std::stringstream ss;
+  ss << std::hex << std::setfill('0');
+  for (int i = 0; input[i] != 0; ++i)
+  {
+    ss << "\\0x" << static_cast<unsigned>(input[i]);
+  }
+  return ss.str();
+}
+
 std::vector<Token>
 Lexer::scan(const std::string& input) {
   auto res = std::vector<Token>();
@@ -65,7 +78,7 @@ Lexer::scan(const std::string& input) {
       }
     }
     if (!found)
-      throw std::invalid_argument(std::string("Unexpected token: ") + token);
+      throw std::invalid_argument(std::string("Unexpected token: ") + token + " (" + atohex(token) + ")");
     token = strtok(nullptr, spaces_);
   }
   

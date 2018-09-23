@@ -28,12 +28,20 @@ Exps::accept(Visitor& visitor) {
 
 /* Value */
 
-Value::Value(std::string name)
-  : name_(name), value_(0), type_(VARIABLE)
+Value::Value(std::string value)
+  : name_(""), int_value_(0), string_value_(value), memory_(RVALUE), type_(STRING)
 {}
 
 Value::Value(int value)
-  : name_(""), value_(value), type_(STATIC)
+  : name_(""), int_value_(value), string_value_(""), memory_(RVALUE), type_(INT)
+{}
+
+Value::Value(std::string name, std::string value)
+  : name_(name), int_value_(0), string_value_(value), memory_(LVALUE)
+{}
+
+Value::Value(std::string name, int value)
+  : name_(name), int_value_(value), string_value_(""), memory_(LVALUE)
 {}
 
 std::string&
@@ -42,13 +50,21 @@ Value::get_name() {
 }
 
 int&
-Value::get_value() {
-  return value_;
+Value::get_int_value() {
+  return int_value_;
 }
 
-Value::value_t&
-Value::get_type() {
+Value::memory_t&
+Value::get_memory() {
+  return memory_;
+}
+
+Value::type_t &Value::get_type() {
   return type_;
+}
+
+std::string &Value::get_string_value() {
+  return string_value_;
 }
 
 void

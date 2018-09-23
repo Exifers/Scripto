@@ -70,12 +70,12 @@ Printer::visit(Exps& exps) {
 
 void
 Printer::visit(Value& value) {
-  switch (value.get_type()) {
-    case Value::VARIABLE:
+  switch (value.get_memory()) {
+    case Value::LVALUE:
       std::cout << value.get_name();
       break;
-    case Value::STATIC:
-      std::cout << value.get_value();
+    case Value::RVALUE:
+      std::cout << value.get_int_value();
       break;
   }
 }
