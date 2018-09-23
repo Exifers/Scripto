@@ -44,6 +44,14 @@ string :== [a-aA-Z0-9_]+
 
 All tokens must be separated by spaces (' ', '\n' or '\t).
 
+= Usage =
+./scripto2 <filename>
+or
+./scripto2, then enter code, then ctrl+D
+
+= Sheebang =
+Scripto2 accepts an eventual '#' on the first line of the file, if it finds it, it skips the first line.
+
 = Authors =
 Exifers,
 July 2018
