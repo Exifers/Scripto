@@ -10,12 +10,20 @@
 #include "parser/parser.hh"
 #include "visitor/visitor.hh"
 #include "interpreter/interpreter.hh"
+#include "lib/util/input.hh"
 
+/**
+ * @name Main
+ * @details A class providing entry point for source code.
+ */
 class Main {
   public:
+   /**
+     * @name run
+     * @details The entry point of the source code, performs all interpreting.
+     * @param source the source code
+     */
     static void run(std::string source);
-    static std::string read_file(std::string filename);
-    static std::string read_cin();
 };
 
 void
@@ -23,61 +31,37 @@ Main::run(std::string source) {
   Lexer lexer = Lexer();
   Printer printer = Printer();
   (void) printer;
-  Interpreter executer = Interpreter();
+  Interpreter interpreter = Interpreter();
   try {
     auto tokens = lexer.scan(source);
     Parser parser = Parser(tokens);
     std::shared_ptr<Node> ast = parser.parse();
     //ast->accept(printer);
     //std::cout << std::endl;
-    ast->accept(executer);
+    ast->accept(interpreter);
   }
   catch(const std::exception& e) {
     std::cerr << e.what() << std::endl;
   }
 }
 
-std::string Main::read_cin() {
-  std::string source;
-  while (true) {
-    std::string str = std::string();
-    if (std::cin.peek() == '\n') {
-      std::cin.get();
-      continue;
-    }
-    else if (std::cin.peek() == EOF) { break; }
-
-    std::getline(std::cin, str);
-    if (str[0] != '#') {
-      source += str + "\n";
-    }
-  }
-  return source;
-}
-
-std::string Main::read_file(std::string filename) {
-  std::ifstream ifs = std::ifstream(filename);
-  std::string source;
-  std::string str;
-  while (ifs.good()) {
-    std::getline(ifs, str);
-    if (str[0] != '#') {
-      source += str + "\n";
-    }
-  }
-  return source;
-}
-
+/**
+ * @name main
+ * @details main function. Reads code from standard input or given file and runs interpreter.
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv) {
   (void) argc;
   (void) argv;
   std::string source;
   if (argc >= 2) {
-    source = Main::read_file(argv[1]);
+    source = read_file(argv[1]);
   }
   else {
     std::cout << "Scripto V0.2" << std::endl;
-    source = Main::read_cin();
+    source = read_cin();
   }
   Main::run(source);
 }
