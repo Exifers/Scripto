@@ -1,20 +1,5 @@
-#! /home/emmanuel/Documents/cpp/scripto2/cmake-build-debug/script.o2
+#! ./cmake-build-debug/script.o2
 
-function foo {
-  print "hello"
-  if ( age == 18 ) {
-    print "age_is_18"
-  }
-  else {
-    print "age_is_not_18"
-  }
-}
+print "welcometomygame"
 
-age = 19
-foo ( )
 
-a = "a"
-b = a
-a = 2
-
-print b

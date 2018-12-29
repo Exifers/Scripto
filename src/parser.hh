@@ -28,4 +28,6 @@ class Parser {
     std::shared_ptr<FunctionDec> parse_function_dec();
     std::shared_ptr<IfStmt> parse_if();
     std::shared_ptr<Value> parse_value();
+    std::shared_ptr<RepeatStmt> parse_repeat();
+    std::shared_ptr<Value> parse_num();
 };

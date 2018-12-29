@@ -136,3 +136,17 @@ class IfStmt : public Exp {
     exps_ptr_t else_exps_;
 };
 
+class RepeatStmt : public Exp {
+public:
+    using exps_ptr_t = std::shared_ptr<Exps>;
+    using value_ptr_t = std::shared_ptr<Value>;
+    RepeatStmt(value_ptr_t num, exps_ptr_t exps);
+
+    value_ptr_t get_num();
+    exps_ptr_t get_exps();
+
+    void accept(Visitor& visitor) override;
+private:
+    value_ptr_t num_;
+    exps_ptr_t exps_;
+};

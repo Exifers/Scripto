@@ -15,6 +15,8 @@ class Executer : public Visitor {
     void visit(FunctionDec& functionDec) override;
     void visit(FunctionCall& functionCall) override; 
     void visit(IfStmt& ifStmt) override;
+    void visit(RepeatStmt& repeatStmt) override;
+
   private:
     std::map<std::string, int> int_values_;
     std::map<std::string, std::string> string_values_;

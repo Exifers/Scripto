@@ -11,6 +11,7 @@ class AssignExp;
 class FunctionDec;
 class FunctionCall;
 class IfStmt;
+class RepeatStmt;
 
 class Visitor {
   public:
@@ -23,6 +24,7 @@ class Visitor {
     virtual void visit(FunctionDec& functionDec) ;
     virtual void visit(FunctionCall& functionCall) ; 
     virtual void visit(IfStmt& ifStmt);
+    virtual void visit(RepeatStmt& repeatStmt);
 };
 
 class Printer : public Visitor {
@@ -36,4 +38,5 @@ class Printer : public Visitor {
     void visit(FunctionDec& functionDec) override;
     void visit(FunctionCall& functionCall) override; 
     void visit(IfStmt& ifStmt) override;
+    void visit(RepeatStmt& repeatStmt) override;
 };

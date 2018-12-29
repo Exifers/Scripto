@@ -30,6 +30,9 @@ Parser::parse_exps() {
       case Token::IF:
         exps->add_exp(parse_if());
         break;
+      case Token::REPEAT:
+        exps->add_exp(parse_repeat());
+        break;
       default:
         throw std::invalid_argument(
           std::string("Unexpected token at beginning of expression: ")
@@ -73,15 +76,25 @@ Parser::parse_value() {
   }
   try {
     // parse int
-    auto res = std::make_shared<Value>(std::stoi(val));
-    step();
-    return res;
+    return parse_num();
   }
   catch(std::invalid_argument& e) {
     // parse name
     auto res = std::make_shared<Value>(val, 0);
     step();
     return res;
+  }
+}
+
+std::shared_ptr<Value> Parser::parse_num() {
+  std::string val = next().get_value();
+  try {
+    auto res = std::make_shared<Value>(std::stoi(val));
+    step();
+    return res;
+  }
+  catch (std::invalid_argument& e) {
+    throw std::invalid_argument("Expected numeric value");
   }
 }
 
@@ -116,6 +129,19 @@ Parser::parse_if() {
     return std::make_shared<IfStmt>(lhs, rhs, exps, else_exps);
   }
   return std::make_shared<IfStmt>(lhs, rhs, exps);
+}
+
+std::shared_ptr<RepeatStmt>
+Parser::parse_repeat() {
+    eat(Token::REPEAT);
+    eat(Token::LPAR);
+    auto num = parse_num();
+    eat(Token::RPAR);
+    eat(Token::LCBRA);
+    auto exps = parse_exps();
+    eat(Token::RCBRA);
+
+    return std::make_shared<RepeatStmt>(num, exps);
 }
 
 void

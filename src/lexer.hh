@@ -16,6 +16,7 @@ class Token {
       PRINT,
       IF,
       ELSE,
+      REPEAT,
       DEQ,
       NUMBER,
       STRING,

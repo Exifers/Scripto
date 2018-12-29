@@ -57,6 +57,12 @@ Visitor::visit(IfStmt& ifStmt) {
   ifStmt.get_exps()->accept(*this);
 }
 
+void
+Visitor::visit(RepeatStmt &repeatStmt) {
+  repeatStmt.get_num()->accept(*this);
+  repeatStmt.get_exps()->accept(*this);
+}
+
 /* Printer */
 
 void
@@ -116,5 +122,14 @@ Printer::visit(IfStmt& ifStmt) {
   ifStmt.get_rhs()->accept(*this);
   std::cout << " ) { ";
   ifStmt.get_exps()->accept(*this);
+  std::cout << " }";
+}
+
+void
+Printer::visit(RepeatStmt &repeatStmt) {
+  std::cout << "repeat (";
+  repeatStmt.get_num()->accept(*this);
+  std::cout << ") { ";
+  repeatStmt.get_exps()->accept(*this);
   std::cout << " }";
 }

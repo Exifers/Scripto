@@ -11,7 +11,7 @@ all: $(obj)
 	$(CXX) $(CXXFLAGS) $(obj) -o $(bin)
 
 debug: $(obj)
-	$(CXX) $(CXXFLAGS) $(obj) -o $(bin)	
+	$(CXX) $(CXXFLAGS) $(obj) -o $(bin)
 
 clean:
 	$(RM) $(bin) $(obj)

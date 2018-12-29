@@ -118,3 +118,12 @@ Executer::visit(IfStmt& ifStmt) {
         break;
   }
 }
+
+void
+Executer::visit(RepeatStmt &repeatStmt) {
+  std::string e("e");
+  for (int i = 0; i < repeatStmt.get_num()->get_int_value(); i++) {
+    set_int_value(e, i);
+    repeatStmt.get_exps()->accept(*this);
+  }
+}

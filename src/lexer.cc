@@ -19,10 +19,11 @@ std::map<Token::token_t, std::string> Token::regexs_ =
   {PRINT, "print"},
   {IF, "if"},
   {ELSE, "else"},
+  {REPEAT, "repeat"},
   {DEQ, "=="},
   {NUMBER, "[0-9]\\+"},
   {STRING, "\"[a-zA-Z0-9_][a-zA-Z0-9_]*\""},
-  {NAME, "[a-zA-Z][a-zA-Z0-9]*"}
+  {NAME, "[a-zA-Z][a-zA-Z0-9_]*"}
 };
 
 Token::Token(token_t type, std::string value)

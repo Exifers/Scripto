@@ -187,3 +187,22 @@ void
 IfStmt::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
+
+RepeatStmt::RepeatStmt(RepeatStmt::value_ptr_t num, RepeatStmt::exps_ptr_t exps)
+  : num_(num), exps_(exps)
+{}
+
+RepeatStmt::value_ptr_t
+RepeatStmt::get_num() {
+  return num_;
+}
+
+RepeatStmt::exps_ptr_t
+RepeatStmt::get_exps() {
+  return exps_;
+}
+
+void
+RepeatStmt::accept(Visitor &visitor) {
+  visitor.visit(*this);
+}
