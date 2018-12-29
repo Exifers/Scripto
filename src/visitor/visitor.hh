@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nodes.hh"
+#include "../nodes/nodes.hh"
 
 class Node;
 class Exps;

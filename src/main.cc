@@ -6,10 +6,10 @@
 #include <memory>
 #include <fstream>
 
-#include "lexer.hh"
-#include "parser.hh"
-#include "visitor.hh"
-#include "executer.hh"
+#include "lexer/lexer.hh"
+#include "parser/parser.hh"
+#include "visitor/visitor.hh"
+#include "interpreter/interpreter.hh"
 
 class Main {
   public:
@@ -23,7 +23,7 @@ Main::run(std::string source) {
   Lexer lexer = Lexer();
   Printer printer = Printer();
   (void) printer;
-  Executer executer = Executer();
+  Interpreter executer = Interpreter();
   try {
     auto tokens = lexer.scan(source);
     Parser parser = Parser(tokens);

@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 
-#include "visitor.hh"
+#include "../visitor/visitor.hh"
 
 class Exp;
 class Visitor;

@@ -1,4 +1,4 @@
-#! ./cmake-build-debug/script.o2
+#! ./main
 
 print "welcometomygame"
 

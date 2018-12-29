@@ -4,9 +4,9 @@
 #include <map>
 #include <memory>
 
-#include "visitor.hh"
+#include "../visitor/visitor.hh"
 
-class Executer : public Visitor {
+class Interpreter : public Visitor {
   public:
     using Visitor::visit;
 

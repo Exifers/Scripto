@@ -4,8 +4,8 @@
 #include <string>
 #include <memory>
 
-#include "lexer.hh"
-#include "nodes.hh"
+#include "../lexer/lexer.hh"
+#include "../nodes/nodes.hh"
 
 class Exp;
 

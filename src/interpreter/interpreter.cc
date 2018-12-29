@@ -1,10 +1,10 @@
 #include <stdexcept>
 #include <iostream>
 
-#include "executer.hh"
+#include "interpreter.hh"
 
 void
-Executer::resolve_value(std::shared_ptr<Value> value) {
+Interpreter::resolve_value(std::shared_ptr<Value> value) {
   if (value->get_memory() == Value::LVALUE) {
         if (int_values_.find(value->get_name()) != int_values_.end()) {
           value->get_int_value() = int_values_[value->get_name()];
@@ -23,7 +23,7 @@ Executer::resolve_value(std::shared_ptr<Value> value) {
 }
 
 void
-Executer::set_int_value(std::string &name, int value) {
+Interpreter::set_int_value(std::string &name, int value) {
   int_values_[name] = value;
   if (string_values_.find(name) != string_values_.end()) {
     string_values_.erase(string_values_.find(name));
@@ -31,7 +31,7 @@ Executer::set_int_value(std::string &name, int value) {
 }
 
 void
-Executer::set_string_value(std::string &name, std::string &value) {
+Interpreter::set_string_value(std::string &name, std::string &value) {
   string_values_[name] = value;
   if (int_values_.find(name) != int_values_.end()) {
     int_values_.erase(int_values_.find(name));
@@ -39,12 +39,12 @@ Executer::set_string_value(std::string &name, std::string &value) {
 }
 
 void
-Executer::set_function(std::string& name, std::shared_ptr<Node> function) {
+Interpreter::set_function(std::string& name, std::shared_ptr<Node> function) {
   functions_[name] = function;
 }
 
 std::shared_ptr<Node>
-Executer::read_function(FunctionCall& functionCall) {
+Interpreter::read_function(FunctionCall& functionCall) {
   if (functions_.find(functionCall.get_name()) == functions_.end()) {
     throw std::invalid_argument("Unknown function: " + functionCall.get_name());
   }
@@ -52,7 +52,7 @@ Executer::read_function(FunctionCall& functionCall) {
 }
 
 void
-Executer::visit(PrintExp& printExp) {
+Interpreter::visit(PrintExp& printExp) {
   resolve_value(printExp.get_value());
   switch (printExp.get_value()->get_type()) {
       case Value::INT:
@@ -66,7 +66,7 @@ Executer::visit(PrintExp& printExp) {
 }
 
 void
-Executer::visit(AssignExp& assignExp) {
+Interpreter::visit(AssignExp& assignExp) {
   resolve_value((assignExp.get_rhs()));
   switch (assignExp.get_rhs()->get_type()) {
       case Value::INT:
@@ -79,18 +79,18 @@ Executer::visit(AssignExp& assignExp) {
 }
 
 void
-Executer::visit(FunctionDec& functionDec) {
+Interpreter::visit(FunctionDec& functionDec) {
   set_function(functionDec.get_name(), functionDec.get_exps());
 }
 
 void
-Executer::visit(FunctionCall& functionCall) {
+Interpreter::visit(FunctionCall& functionCall) {
   auto function = read_function(functionCall);
   function->accept(*this);
 }
 
 void
-Executer::visit(IfStmt& ifStmt) {
+Interpreter::visit(IfStmt& ifStmt) {
   resolve_value(ifStmt.get_lhs());
   resolve_value(ifStmt.get_rhs());
 
@@ -120,7 +120,7 @@ Executer::visit(IfStmt& ifStmt) {
 }
 
 void
-Executer::visit(RepeatStmt &repeatStmt) {
+Interpreter::visit(RepeatStmt &repeatStmt) {
   std::string e("e");
   for (int i = 0; i < repeatStmt.get_num()->get_int_value(); i++) {
     set_int_value(e, i);
