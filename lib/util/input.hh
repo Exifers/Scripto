@@ -10,7 +10,8 @@ std::string read_file(std::string filename);
 
 /**
  * @name read_cin
- * @@details Reads standard input and stores it into a string until it finds EOF character.
+ * @@details Reads standard input and stores it into a string until it finds EOF
+ * character.
  * @return a string containing the read standard input
  */
 std::string read_cin();
